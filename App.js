@@ -7,19 +7,19 @@ import {
   Button,
   TouchableHighlight,
   Pressable,
+
 } from "react-native";
 import icon from "./assets/splash-icon.png";
 
+
 export default function App() {
+
+
   return (
     <View style={styles.container}>
       <Image
         source={icon}
-        style={{
-          width: 100,
-          height: 100,
-          resizeMode: "center",
-        }}
+        style={styles.Image}
       />
       <Text style={{ color: "white" }}>Paydrive esta funcionando!</Text>
       <Button
@@ -53,5 +53,12 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(68, 152, 221, 1)",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop:Constants.statusBarHeight,
+    padding:12
+  },
+  Image: {
+    width: 100,
+    height: 100,
+    resizeMode: "center",
   },
 });
