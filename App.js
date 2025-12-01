@@ -1,50 +1,21 @@
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
-  Text,
   View,
-  Image,
-  Button,
-  TouchableHighlight,
-  Pressable,
-
 } from "react-native";
-import icon from "./assets/splash-icon.png";
+import { Main } from "./components/Main.jsx";
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 
 export default function App() {
 
 
-  return (
+  return (<SafeAreaProvider>
     <View style={styles.container}>
-      <Image
-        source={icon}
-        style={styles.Image}
-      />
-      <Text style={{ color: "white" }}>Paydrive esta funcionando!</Text>
-      <Button
-        color="#4e5"
-        title="Boton sospechoso"
-        onPress={() => alert("Probando alertas")}
-      ></Button>
-
-      <TouchableHighlight underlayColor={"#4e5"}>
-        <Text>Vamos</Text>
-      </TouchableHighlight>
-      <Pressable>
-        {({ pressed }) => (
-          <Text
-            style={{
-              fontSize: pressed ? 45 : 16,
-            }}
-          >
-            {pressed ? "Boton precionado" : "Boton sin Presionar"}
-          </Text>
-        )}
-      </Pressable>
+      <Main />
       <StatusBar style="auto" />
     </View>
-  );
+  </SafeAreaProvider>);
 }
 
 const styles = StyleSheet.create({
@@ -53,12 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(68, 152, 221, 1)",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop:Constants.statusBarHeight,
-    padding:12
-  },
-  Image: {
-    width: 100,
-    height: 100,
-    resizeMode: "center",
+    paddingTop:12,
+    paddingHorizontal:12
   },
 });
