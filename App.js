@@ -1,14 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import { Main } from "./components/Main.jsx";
+//import { Main } from "./components/Main.jsx";
+import { Principal } from "./components/Principal.jsx";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-//import { Form } from "./screens/Form.jsx";
+import { Form } from "./screens/Form.jsx";
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <Main />
+        <Form />
         <StatusBar style="auto" />
       </View>
     </SafeAreaProvider>
