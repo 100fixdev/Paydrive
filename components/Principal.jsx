@@ -39,7 +39,7 @@ export function Principal() {
   );
 }
 
-const styles = StyleSheet.create({  
+export const styles = StyleSheet.create({  
   body: {
     flex: 1,
     backgroundColor: "rgba(206, 157, 51, 1)",
