@@ -12,7 +12,9 @@ export function ListadoProductos() {
       <View style={styles.container__btn}>
           <Pressable style={styles.btn__agregar}>
             <Text style={styles.txt__agregar}>+</Text>
-        </Pressable>
+          </Pressable>
+
+            <Text>Agregar Producto</Text>
       </View>
     </View>
 
@@ -36,12 +38,17 @@ export const styles = StyleSheet.create({
   },
   container__item: {
     backgroundColor: '#f74',
-    height: '75%',
+    height: '70%',
   },
   btn__agregar: {
-    backgroundColor: 'rgba(68, 152, 221, 1)',
-    borderRadius: 50,
-    width: 50,
+    backgroundColor: 'rgba(38, 112, 221, 1)',
+    borderRadius: 80,
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+        marginBottom:10
+
   },
     txt__agregar: {
         fontSize:18,
