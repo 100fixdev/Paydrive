@@ -17,9 +17,10 @@ export function Principal() {
 
   return (
     <View style={styles.body}>
-      <Text style={styles.title}>Mis simulaciones</Text>
+      
 
       <View style={{ width: "100%", alignItems: "center" }}>
+        <Text style={styles.title}>Mis simulaciones</Text>
         {simulations.map((sim) => (
           <SimulationCard
             key={sim.id}
@@ -51,7 +52,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(206, 157, 51, 1)",
     alignItems: "center",
+    justifyContent: "space-around",
     paddingTop: 40,
+    paddingBottom: 40,
     width: "100%",
   },
   title: {
