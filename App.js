@@ -1,18 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-
-// Navegación
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-// Contexto global
+import { Principal } from "./components/Principal.jsx";
+import { ListadoProductos } from "./screens/Lista-prod.jsx";
+import { Form } from "./screens/Form.jsx";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { SimulationsProvider } from "./context/SimulationsContext.jsx";
-
-// Tus pantallas
-import { Principal } from "./components/Principal.jsx"; // lista de simulaciones
-import { ListadoProductos } from "./screens/Lista-prod.jsx"; // productos de una simulación
-import { Form } from "./screens/Form.jsx"; // formulario para agregar producto
 
 const Stack = createNativeStackNavigator();
 
@@ -20,32 +15,31 @@ export default function App() {
   return (
     <SimulationsProvider>
       <SafeAreaProvider>
+        {/* CONTIENE TODA LA NAVEGACIÓN */}
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false, // ocultamos los headers para que no cambie tu diseño
+            }}
+          >
+            {/* Pantalla principal donde se ven las simulaciones */}
+            <Stack.Screen name="Principal" component={Principal} />
 
-            <Stack.Screen
-              name="Principal"
-              component={Principal}
-              options={{ title: "Simulaciones" }}
-            />
+            {/* Pantalla donde se crean simulaciones o productos */}
+            <Stack.Screen name="Form" component={Form} />
 
+            {/* Pantalla de listado de productos */}
             <Stack.Screen
               name="ListadoProductos"
               component={ListadoProductos}
-              options={{ title: "Productos" }}
             />
-
-            <Stack.Screen
-              name="Form"
-              component={Form}
-              options={{ title: "Agregar Producto" }}
-            />
-
           </Stack.Navigator>
-
-          <StatusBar style="auto" />
         </NavigationContainer>
+
+        <StatusBar style="auto" />
       </SafeAreaProvider>
     </SimulationsProvider>
   );
 }
+
+const styles = StyleSheet.create({});

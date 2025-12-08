@@ -1,26 +1,40 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 
-export const SimulationsContext = createContext();
+const SimulationsContext = createContext();
 
 export function SimulationsProvider({ children }) {
-    const [simulations, setSimulations] = useState([]);
+  const [simulations, setSimulations] = useState([]);
 
-    function addSimulation(name){
-        const newSimulation = { id: Date.now(), name, products: [] };
+  // Crear una simulación nueva
+  const addSimulation = () => {
+    const newSimulation = {
+      id: Date.now(),
+      name: "Simulación " + (simulations.length + 1),
+      products: [],
+    };
 
-        setSimulations(prev => [...prev, newSimulation]);
-    }
+    setSimulations([...simulations, newSimulation]);
+    return newSimulation.id;
+  };
 
-    function addProductToSimulation(simulationId, product){
-        setSimulations(prev => prev.map(sim => sim.id === simulationId ? { ...sim, products: [...sim.products, product] } : sim));
-
-    }
-
-    return(
-        <SimulationsContext.Provider value={{ simulations, addSimulation, addProductToSimulation }}>
-            {children}
-        </SimulationsContext.Provider>
+  // Agregar un producto a una simulación específica
+  const addProductToSimulation = (simulationId, product) => {
+    setSimulations((prev) =>
+      prev.map((sim) =>
+        sim.id === simulationId
+          ? { ...sim, products: [...sim.products, product] }
+          : sim
+      )
     );
+  };
+
+  return (
+    <SimulationsContext.Provider
+      value={{ simulations, addSimulation, addProductToSimulation }}
+    >
+      {children}
+    </SimulationsContext.Provider>
+  );
 }
 
-
+export const useSimulations = () => useContext(SimulationsContext);

@@ -1,83 +1,69 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  TouchableHighlight,
-  Pressable,
-  FlatList,
-} from "react-native";
-import icon from "../assets/splash-icon.png";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import SimulationCard from "../components/SimulationCard";
+import { useSimulations } from "../context/SimulationsContext";
 
 export function Principal() {
-  const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
+  const { simulations, addSimulation } = useSimulations();
+
+  const handleAddSimulation = () => {
+    const newId = addSimulation();
+    navigation.navigate("ListadoProductos", {
+      simulationId: newId,
+    });
+  };
 
   return (
-    
     <View style={styles.body}>
-      <View style={styles.container__card}>
-      <Text style={styles.title}>Mis Simulaciones</Text>
+      <Text style={styles.title}>Mis simulaciones</Text>
 
-        <View style={styles.card}>
-          <Pressable>
-            <Text>Simulacion X</Text>
-          </Pressable>
-        </View>
+      <View style={{ width: "100%", alignItems: "center" }}>
+        {simulations.map((sim) => (
+          <SimulationCard
+            key={sim.id}
+            name={sim.name}
+            productCount={sim.products.length}
+            onPress={() =>
+              navigation.navigate("ListadoProductos", {
+                simulationId: sim.id,
+              })
+            }
+          />
+        ))}
       </View>
 
       <View style={styles.container__agregar}>
-        <Pressable style={styles.btn__agregar}>
+        <Pressable style={styles.btn__agregar} onPress={handleAddSimulation}>
           <Text style={styles.txt__agregar}>+</Text>
         </Pressable>
-        <Text>Agregar Simulacion</Text>
+        <Text>Agregar Simulación</Text>
       </View>
+
       <StatusBar style="auto" />
     </View>
   );
 }
 
-export const styles = StyleSheet.create({  
+const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: "rgba(206, 157, 51, 1)",
     alignItems: "center",
-    justifyContent: "space-evenly",
+    paddingTop: 40,
     width: "100%",
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 22,
     marginBottom: 20,
+    fontWeight: "bold",
   },
-  container__card:{
-    width: "100%",
-    alignItems: "center",
-  },
-  Image: {
-    width: 100,
-    height: 100,
-    resizeMode: "center",
-  },
-  card:{
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 20,
-    borderWidth: 2,
-    borderColor: "black",
-    width: "90%",
-    alignItems: "center",
-    justifyContent: "center",
-
-  },
-  container__agregar:{
+  container__agregar: {
     alignItems: "center",
     marginTop: 20,
-    backgroundColor: "green",
   },
-  btn__agregar:{
+  btn__agregar: {
     backgroundColor: "crimson",
     borderRadius: 50,
     width: 50,
@@ -85,7 +71,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  txt__agregar:{
+  txt__agregar: {
     color: "white",
     fontSize: 40,
   },

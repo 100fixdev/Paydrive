@@ -1,33 +1,40 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Image,
-  Button,
-  TouchableHighlight,
-  Pressable,
-  FlatList,} from "react-native";
-import icon from "../assets/splash-icon.png";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import React from "react";
-
-
+import { useSimulations } from "../context/SimulationsContext";
 
 export function Form() {
-    const insets = useSafeAreaInsets();
-    const [numero, setNumero] = React.useState('');
+  const { addProductToSimulation } = useSimulations();
+  const route = useRoute();
+  const navigation = useNavigation();
 
-    const handleCambio = (texto) =>{
+  const { simulationId } = route.params;
 
-        const textoNumerico = texto.replace(/[^0-9]/g, '');
-        setNumero(textoNumerico);
-    }
+  const [title, setTitle] = React.useState("");
 
-    return (
+  const handleSubmit = () => {
+    if (title.trim() === "") return;
+
+    addProductToSimulation(simulationId, {
+      title,
+    });
+
+    navigation.goBack();
+  };
+
+  return (
+    <View style={{ padding: 20 }}>
+      <Text>Agregar Producto</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Título del producto"
+        value={title}
+        onChangeText={setTitle}
+      />
+
+
       <View>
-        <View>
           <Text>Detalles de producto</Text>
         </View>
 
@@ -35,37 +42,38 @@ export function Form() {
           <View>
             <Text>Formulario</Text>
             <TextInput   placeholder="Titulo de Producto" style={styles.input} />
-            <TextInput  onChange={handleCambio} keyboardType="numeric" placeholder="Cantidad" style={styles.input} />
-            <TextInput  onChange={handleCambio} keyboardType="numeric" placeholder="Costo Unitario" style={styles.input} />
-            <TextInput  onChange={handleCambio} keyboardType="numeric" placeholder="Precio de Venta" style={styles.input} />
-            <TextInput  onChange={handleCambio} keyboardType="numeric" placeholder="Demanda esperada" style={styles.input} />
+            <TextInput   keyboardType="numeric" placeholder="Cantidad" style={styles.input} />
+            <TextInput   keyboardType="numeric" placeholder="Costo Unitario" style={styles.input} />
+            <TextInput   keyboardType="numeric" placeholder="Precio de Venta" style={styles.input} />
+            <TextInput   keyboardType="numeric" placeholder="Demanda esperada" style={styles.input} />
             <TextInput  placeholder="Detalle de Producto" style={styles.input} />
-            <TextInput  onChange={handleCambio} keyboardType="numeric" placeholder="Costo Unitario" style={styles.input} />
+            <TextInput   keyboardType="numeric" placeholder="Costo Unitario" style={styles.input} />
           </View>
 
           <View>
             <Text>Politicas de Producto</Text>
-            <TextInput onChange={handleCambio} keyboardType="numeric" placeholder="Stock minimo" style={styles.input} />
-            <TextInput onChange={handleCambio} keyboardType="numeric" placeholder="Maximo de Producto" style={styles.input} />
-            <TextInput onChange={handleCambio} keyboardType="numeric" placeholder="Minimo de Producto" style={styles.input} />
+            <TextInput  keyboardType="numeric" placeholder="Stock minimo" style={styles.input} />
+            <TextInput  keyboardType="numeric" placeholder="Maximo de Producto" style={styles.input} />
+            <TextInput  keyboardType="numeric" placeholder="Minimo de Producto" style={styles.input} />
             
           </View>
         </View>
 
-        <Button title="Agregar producto" onPress={() => alert("Formulario enviado")} />
-        <StatusBar style="auto" />
-      </View>
-    );
+        {/*<Button title="Agregar producto" onPress={() => alert("Formulario enviado")} />*/}
+
+      <Button title="Guardar" onPress={handleSubmit} />
+    </View>
+  );
 }
-    
+
 const styles = StyleSheet.create({
-    input:{
-        height: 40,
-        width: 250,
-        backgroundColor:'white',
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 10,
-        paddingHorizontal: 5
-    }
+  input: {
+    height: 40,
+    width: "100%",
+    backgroundColor: "white",
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 12,
+    paddingHorizontal: 10,
+  },
 });
