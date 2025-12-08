@@ -62,3 +62,25 @@ export default function App() {
 
 
 **
+
+**
+# Ejemplo de faltist 
+
+export default function Principal({navigation}) {
+  const insets = useSafeAreaInsets();
+  useContext(SimulationsContext);
+
+<FlatList
+          data={simulations}
+          
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => navigation.navigate("Lista de produtos", { simulationId: item.id, name: item.name })}>
+
+                <Text>{item.name}</Text>
+                <Text>Productos: {item.products.length}</Text>
+              </TouchableOpacity>
+          )}
+        />
+
+**
