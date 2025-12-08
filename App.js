@@ -4,15 +4,18 @@ import { StyleSheet, View } from "react-native";
 import { Principal } from "./components/Principal.jsx";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Form } from "./screens/Form.jsx";
+import { SimulationsProvider } from "./context/SimulationsContext.jsx";
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <View style={styles.container}>
-        <Form />
-        <StatusBar style="auto" />
-      </View>
-    </SafeAreaProvider>
+    <SimulationsProvider>
+      <SafeAreaProvider>
+        <View style={styles.container}>
+          <Form />
+          <StatusBar style="auto" />
+        </View>
+      </SafeAreaProvider>
+    </SimulationsProvider>
   );
 }
 
