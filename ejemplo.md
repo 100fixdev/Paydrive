@@ -42,3 +42,23 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
+
+
+**
+# Ejemplo de us de card
+
+ <FlatList
+          data={simulations}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}) => (
+            <SimulationCard
+              name={item.name}
+              productCount={item.products.length}
+              onPress={() => navigation.navigate("Lista de productos", { simulationid: item.id })}
+              value={item.value}
+            />
+          )}
+        />
+
+
+**
