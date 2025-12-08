@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 //import { Main } from "./components/Main.jsx";
 import { Principal } from "./components/Principal.jsx";
+import { ListadoProductos } from "./screens/Lista-prod.jsx";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Form } from "./screens/Form.jsx";
 import { SimulationsProvider } from "./context/SimulationsContext.jsx";
