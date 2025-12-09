@@ -23,50 +23,82 @@ export function Form() {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Agregar Producto</Text>
+    <View style={styles.body}>
+      <View style={styles.container__form}>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Título del producto"
-        value={title}
-        onChangeText={setTitle}
-      />
+        <Text>Nombre del Producto</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="EJ: Refrescos, barritas, etc."
+          value={title}
+          onChangeText={setTitle}
+        />
 
-
-      <View>
-          <Text>Detalles de producto</Text>
+        <Text>Detalles del producto</Text>
+        <View>
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Cantidad"
+            style={styles.input}
+          />
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Costo Unitario"
+            style={styles.input}
+          />
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Precio de Venta"
+            style={styles.input}
+          />
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Demanda esperada"
+            style={styles.input}
+          />
+          <TextInput placeholder="Detalle de Producto" style={styles.input} />
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Costo Unitario"
+            style={styles.input}
+          />
         </View>
 
-        <View style={styles.container__form}>
-          <View>
-            <Text>Formulario</Text>
-            <TextInput   placeholder="Titulo de Producto" style={styles.input} />
-            <TextInput   keyboardType="numeric" placeholder="Cantidad" style={styles.input} />
-            <TextInput   keyboardType="numeric" placeholder="Costo Unitario" style={styles.input} />
-            <TextInput   keyboardType="numeric" placeholder="Precio de Venta" style={styles.input} />
-            <TextInput   keyboardType="numeric" placeholder="Demanda esperada" style={styles.input} />
-            <TextInput  placeholder="Detalle de Producto" style={styles.input} />
-            <TextInput   keyboardType="numeric" placeholder="Costo Unitario" style={styles.input} />
-          </View>
-
-          <View>
-            <Text>Politicas de Producto</Text>
-            <TextInput  keyboardType="numeric" placeholder="Stock minimo" style={styles.input} />
-            <TextInput  keyboardType="numeric" placeholder="Maximo de Producto" style={styles.input} />
-            <TextInput  keyboardType="numeric" placeholder="Minimo de Producto" style={styles.input} />
-            
-          </View>
+        <View>
+          <Text>Politicas de Producto</Text>
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Stock minimo"
+            style={styles.input}
+          />
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Maximo de Producto"
+            style={styles.input}
+          />
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Minimo de Producto"
+            style={styles.input}
+          />
         </View>
+      </View>
 
-        {/*<Button title="Agregar producto" onPress={() => alert("Formulario enviado")} />*/}
+      {/*<Button title="Agregar producto" onPress={() => alert("Formulario enviado")} />*/}
 
-      <Button title="Guardar" onPress={handleSubmit} />
+      <Button title="Guardar Producto" onPress={handleSubmit} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  body: {
+    padding: 20,
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "rgba(140, 204, 146, 1)",
+    
+  },
   input: {
     height: 40,
     width: "100%",
@@ -75,5 +107,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 12,
     paddingHorizontal: 10,
+  },
+  container__form: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    marginBottom: 20,
   },
 });
