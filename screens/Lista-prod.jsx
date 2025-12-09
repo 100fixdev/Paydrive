@@ -13,20 +13,22 @@ export function ListadoProductos() {
 
   return (
     <View style={styles.container__prod}>
-      <Text style={styles.title}>{simulation.name}</Text>
+      <View style={styles.container__prod_list}>
+        <Text style={styles.title}>{simulation.name}</Text>
 
-      <View style={{ alignItems: "center" }}>
-        {simulation.products.length === 0 ? (
-          <Text style={{ color: "gray" }}>No hay productos aún</Text>
-        ) : (
-          simulation.products.map((p, index) => (
-            <ProductCard
-              key={index}
-              title={p.title}
-              onPress={() => {}}
-            />
-          ))
-        )}
+        <View style={{ alignItems: "center", marginBottom: 10 }}>
+          <Text>Lista de productos</Text>
+        </View>
+
+        <View style={{ alignItems: "center" }}>
+          {simulation.products.length === 0 ? (
+            <Text style={{ color: "gray" }}>No hay productos aún</Text>
+          ) : (
+            simulation.products.map((p, index) => (
+              <ProductCard key={index} title={p.title} onPress={() => {}} />
+            ))
+          )}
+        </View>
       </View>
 
       <View style={styles.container__btn}>
@@ -39,7 +41,7 @@ export function ListadoProductos() {
           <Text style={styles.txt__agregar}>+</Text>
         </Pressable>
 
-        <Text>Agregar Producto</Text>
+        <Text>Agregar Productos</Text>
       </View>
     </View>
   );
@@ -48,14 +50,22 @@ export function ListadoProductos() {
 const styles = StyleSheet.create({
   container__prod: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#fff",
+    padding: 25,
+    backgroundColor: "#f2f2f2",
+    justifyContent: "space-between",
+    height: "100%",
+    marginBottom: 25,
+
+    
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
     marginTop: 15,
+  },
+  container__prod_list: {
+    
   },
   container__btn: {
     alignItems: "center",
