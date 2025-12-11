@@ -10,7 +10,9 @@ import {
   FlatList,
 } from "react-native";
 import icon from "../assets/splash-icon.png";
+import React, { useContext } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 
 export function Main() {
   const insets = useSafeAreaInsets();

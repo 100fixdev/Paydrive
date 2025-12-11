@@ -1,3 +1,5 @@
+// screens/Principal.jsx
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -9,7 +11,8 @@ export function Principal() {
   const { simulations, addSimulation } = useSimulations();
 
   const handleAddSimulation = () => {
-    const newId = addSimulation();
+    // addSimulation ahora devuelve el id
+    const newId = addSimulation(); // nombre opcional
     navigation.navigate("ListadoProductos", {
       simulationId: newId,
     });
@@ -17,8 +20,6 @@ export function Principal() {
 
   return (
     <View style={styles.body}>
-      
-
       <View style={{ width: "100%", alignItems: "center" }}>
         <Text style={styles.title}>Mis simulaciones</Text>
         {simulations.map((sim) => (

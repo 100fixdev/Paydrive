@@ -8,6 +8,7 @@ import { ListadoProductos } from "./screens/Lista-prod.jsx";
 import { Form } from "./screens/Form.jsx";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { SimulationsProvider } from "./context/SimulationsContext.jsx";
+import SimulationResultsScreen from "./screens/SimulationResultsScreen.jsx";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,14 @@ export default function App() {
               name="ListadoProductos"
               component={ListadoProductos}
             />
+
+            {/* Pantalla de resultados de la simulación */}
+            <Stack.Screen
+              name="SimulationResults"
+              component={SimulationResultsScreen}
+            />
+
+
           </Stack.Navigator>
         </NavigationContainer>
 

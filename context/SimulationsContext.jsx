@@ -1,40 +1,74 @@
-import React, { createContext, useState, useContext } from "react";
+// context/SimulationsContext.js
+import { createContext, useContext, useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SimulationsContext = createContext();
+const SimulationsContext = createContext(null);
 
 export function SimulationsProvider({ children }) {
   const [simulations, setSimulations] = useState([]);
 
-  // Crear una simulación nueva
-  const addSimulation = () => {
-    const newSimulation = {
-      id: Date.now(),
-      name: "Simulación " + (simulations.length + 1),
-      products: [],
-    };
+  useEffect(() => {
+    (async () => {
+      try {
+        const json = await AsyncStorage.getItem("SIMULATIONS_DATA");
+        if (json) setSimulations(JSON.parse(json));
+      } catch (e) {
+        console.warn("Error loading simulations:", e);
+      }
+    })();
+  }, []);
 
-    setSimulations([...simulations, newSimulation]);
-    return newSimulation.id;
+  const persist = async (next) => {
+    setSimulations(next);
+    try {
+      await AsyncStorage.setItem("SIMULATIONS_DATA", JSON.stringify(next));
+    } catch (e) {
+      console.warn("Error saving simulations:", e);
+    }
   };
 
-  // Agregar un producto a una simulación específica
+  // ahora devuelve el id de la nueva simulación
+  const addSimulation = (name = `Simulación ${simulations.length + 1}`) => {
+    const newSim = { id: Date.now(), name, products: [], results: null };
+    persist([...simulations, newSim]);
+    return newSim.id;
+  };
+
   const addProductToSimulation = (simulationId, product) => {
-    setSimulations((prev) =>
-      prev.map((sim) =>
-        sim.id === simulationId
-          ? { ...sim, products: [...sim.products, product] }
-          : sim
-      )
+    const updated = simulations.map((s) =>
+      s.id === simulationId ? { ...s, products: [...s.products, product] } : s
     );
+    persist(updated);
+  };
+
+  const saveSimulationResults = (simulationId, results) => {
+    const updated = simulations.map((s) =>
+      s.id === simulationId ? { ...s, results } : s
+    );
+    persist(updated);
   };
 
   return (
     <SimulationsContext.Provider
-      value={{ simulations, addSimulation, addProductToSimulation }}
+      value={{
+        simulations,
+        addSimulation,
+        addProductToSimulation,
+        saveSimulationResults,
+      }}
     >
       {children}
     </SimulationsContext.Provider>
   );
 }
 
-export const useSimulations = () => useContext(SimulationsContext);
+// Hook helper — úsalo en componentes
+export function useSimulations() {
+  const ctx = useContext(SimulationsContext);
+  if (!ctx) {
+    throw new Error("useSimulations must be used within SimulationsProvider");
+  }
+  return ctx;
+}
+
+export { SimulationsContext };
