@@ -11,16 +11,13 @@ export function Principal() {
   const { simulations, addSimulation } = useSimulations();
 
   const handleAddSimulation = () => {
-    // addSimulation ahora devuelve el id
-    const newId = addSimulation(); // nombre opcional
-    navigation.navigate("ListadoProductos", {
-      simulationId: newId,
-    });
+    const newId = addSimulation();
+    navigation.navigate("ListadoProductos", { simulationId: newId });
   };
 
   return (
     <View style={styles.body}>
-      <View style={{ width: "100%", alignItems: "center" }}>
+      <View style={styles.listContainer}>
         <Text style={styles.title}>Mis simulaciones</Text>
         {simulations.map((sim) => (
           <SimulationCard
@@ -28,9 +25,7 @@ export function Principal() {
             name={sim.name}
             productCount={sim.products.length}
             onPress={() =>
-              navigation.navigate("ListadoProductos", {
-                simulationId: sim.id,
-              })
+              navigation.navigate("ListadoProductos", { simulationId: sim.id })
             }
           />
         ))}
@@ -40,7 +35,7 @@ export function Principal() {
         <Pressable style={styles.btn__agregar} onPress={handleAddSimulation}>
           <Text style={styles.txt__agregar}>+</Text>
         </Pressable>
-        <Text>Agregar Simulación</Text>
+        <Text style={styles.addLabel}>Agregar Simulación</Text>
       </View>
 
       <StatusBar style="auto" />
@@ -51,32 +46,49 @@ export function Principal() {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: "rgba(206, 157, 51, 1)",
+    backgroundColor: "linear-gradient", // decorativo: RN no interpreta strings como css-gradients; kept for design note
     alignItems: "center",
-    justifyContent: "space-around",
-    paddingTop: 40,
-    paddingBottom: 40,
+    justifyContent: "space-between",
+    paddingTop: 36,
+    paddingBottom: 28,
     width: "100%",
+  },
+  listContainer: {
+    width: "100%",
+    alignItems: "center",
+    paddingHorizontal: 12,
   },
   title: {
     fontSize: 22,
-    marginBottom: 20,
-    fontWeight: "bold",
+    marginBottom: 12,
+    fontWeight: "800",
+    color: "#0f1724",
   },
   container__agregar: {
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 12,
   },
   btn__agregar: {
-    backgroundColor: "crimson",
+    backgroundColor: "#ff5a6a",
     borderRadius: 50,
-    width: 50,
-    height: 50,
+    width: 56,
+    height: 56,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#ff5a6a",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 12,
+    elevation: 6,
   },
   txt__agregar: {
     color: "white",
-    fontSize: 40,
+    fontSize: 38,
+    lineHeight: 38,
+    fontWeight: "700",
+  },
+  addLabel: {
+    marginTop: 6,
+    color: "#374151",
   },
 });

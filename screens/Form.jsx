@@ -32,7 +32,7 @@ export function Form() {
   return (
     <View style={styles.body}>
       <View style={styles.container__form}>
-        <Text>Nombre del Producto</Text>
+        <Text style={styles.label}>Nombre del Producto</Text>
         <TextInput
           style={styles.input}
           placeholder="EJ: Refrescos, barritas, etc."
@@ -40,7 +40,7 @@ export function Form() {
           onChangeText={setTitle}
         />
 
-        <Text>Cantidad</Text>
+        <Text style={styles.label}>Cantidad</Text>
         <TextInput
           keyboardType="numeric"
           placeholder="Cantidad"
@@ -49,7 +49,7 @@ export function Form() {
           onChangeText={setQuantity}
         />
 
-        <Text>Costo Unitario</Text>
+        <Text style={styles.label}>Costo Unitario</Text>
         <TextInput
           keyboardType="numeric"
           placeholder="Costo Unitario"
@@ -58,7 +58,7 @@ export function Form() {
           onChangeText={setCost}
         />
 
-        <Text>Precio de Venta</Text>
+        <Text style={styles.label}>Precio de Venta</Text>
         <TextInput
           keyboardType="numeric"
           placeholder="Precio de Venta"
@@ -67,7 +67,7 @@ export function Form() {
           onChangeText={setPrice}
         />
 
-        <Text>Demanda Esperada</Text>
+        <Text style={styles.label}>Demanda Esperada</Text>
         <TextInput
           keyboardType="numeric"
           placeholder="Demanda esperada"
@@ -77,30 +77,43 @@ export function Form() {
         />
       </View>
 
-      <Button title="Guardar Producto" onPress={handleSubmit} />
+      <View style={styles.buttonWrap}>
+        <Button title="Guardar Producto" onPress={handleSubmit} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   body: {
-    padding: 20,
+    padding: 18,
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "rgba(140, 204, 146, 1)",
+    justifyContent: "flex-start",
+    backgroundColor: "#f2f1e6",
   },
   input: {
-    height: 40,
+    height: 44,
     width: "100%",
     backgroundColor: "white",
-    borderColor: "gray",
+    borderColor: "rgba(16,24,40,0.06)",
     borderWidth: 1,
+    borderRadius: 8,
     marginBottom: 12,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.02,
+    elevation: 1,
   },
   container__form: {
     flexDirection: "column",
-    justifyContent: "space-between",
     marginBottom: 20,
+  },
+  label: {
+    marginBottom: 6,
+    color: "#374151",
+    fontWeight: "600",
+  },
+  buttonWrap: {
+    marginTop: 8,
   },
 });

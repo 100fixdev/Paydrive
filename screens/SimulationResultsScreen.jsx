@@ -24,17 +24,41 @@ export default function SimulationResultsScreen({ route }) {
       <Text style={styles.title}>{simulation.name} - Resultados</Text>
 
       <View style={styles.metrics}>
-        <Text style={styles.metric}>Ganancia: ${profit}</Text>
-        <Text style={styles.metric}>Unidades vendidas: {soldUnits}</Text>
-        <Text style={styles.metric}>Costo de inventario: ${inventoryCost}</Text>
+        <View style={styles.card}>
+          <Text style={styles.metricLabel}>Ganancia</Text>
+          <Text style={styles.metricValue}>${profit}</Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.metricLabel}>Unidades vendidas</Text>
+          <Text style={styles.metricValue}>{soldUnits}</Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.metricLabel}>Costo de inventario</Text>
+          <Text style={styles.metricValue}>${inventoryCost}</Text>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 22, fontWeight: "bold", marginBottom: 20 },
-  metrics: { marginBottom: 20 },
-  metric: { fontSize: 16, marginBottom: 5 },
+  container: { flex: 1, padding: 18, backgroundColor: "#fffefe" },
+  title: { fontSize: 22, fontWeight: "800", marginBottom: 18, color: "#0b1220" },
+  metrics: { gap: 12 },
+  card: {
+    padding: 14,
+    borderRadius: 12,
+    backgroundColor: "#ffffff",
+    borderColor: "rgba(12,18,32,0.04)",
+    borderWidth: 0.6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.04,
+    shadowRadius: 18,
+    elevation: 3,
+  },
+  metricLabel: { color: "#6b7280", fontSize: 13, marginBottom: 6 },
+  metricValue: { fontSize: 18, fontWeight: "700", color: "#111827" },
 });
