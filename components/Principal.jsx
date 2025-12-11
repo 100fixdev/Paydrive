@@ -1,14 +1,15 @@
 // screens/Principal.jsx
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SimulationCard from "../components/SimulationCard";
 import { useSimulations } from "../context/SimulationsContext";
+import FancyButton from "./FancyButton";
 
 export function Principal() {
   const navigation = useNavigation();
-  const { simulations, addSimulation } = useSimulations();
+  const { simulations, addSimulation, removeSimulation } = useSimulations();
 
   const handleAddSimulation = () => {
     const newId = addSimulation();
@@ -27,14 +28,13 @@ export function Principal() {
             onPress={() =>
               navigation.navigate("ListadoProductos", { simulationId: sim.id })
             }
+            onDelete={() => removeSimulation(sim.id)}
           />
         ))}
       </View>
 
       <View style={styles.container__agregar}>
-        <Pressable style={styles.btn__agregar} onPress={handleAddSimulation}>
-          <Text style={styles.txt__agregar}>+</Text>
-        </Pressable>
+        <FancyButton onPress={handleAddSimulation} style={styles.addBtn}>+</FancyButton>
         <Text style={styles.addLabel}>Agregar Simulación</Text>
       </View>
 
@@ -46,7 +46,7 @@ export function Principal() {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: "linear-gradient", // decorativo: RN no interpreta strings como css-gradients; kept for design note
+    backgroundColor: "#f6f5ef",
     alignItems: "center",
     justifyContent: "space-between",
     paddingTop: 36,
@@ -68,6 +68,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 12,
   },
+  addBtn: {
+    // tamaño y colores del botón principal (puedes ajustarlo)
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+  },
+  addLabel: {
+    marginTop: 6,
+    color: "#374151",
+  },
+});
+
+/* Estilos antiguos (comentados por referencia)
   btn__agregar: {
     backgroundColor: "#ff5a6a",
     borderRadius: 50,
@@ -87,8 +100,4 @@ const styles = StyleSheet.create({
     lineHeight: 38,
     fontWeight: "700",
   },
-  addLabel: {
-    marginTop: 6,
-    color: "#374151",
-  },
-});
+*/

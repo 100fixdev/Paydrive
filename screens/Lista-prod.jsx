@@ -1,8 +1,9 @@
 // screens/ListadoProductos.jsx
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import ProductCard from "../components/ProductCard";
+import FancyButton from "../components/FancyButton";
 
 import { useSimulations } from "../context/SimulationsContext";
 import { runSimulation } from "../utils/runSimulation";
@@ -10,16 +11,15 @@ import { runSimulation } from "../utils/runSimulation";
 export function ListadoProductos() {
   const route = useRoute();
   const navigation = useNavigation();
-  const { simulations, saveSimulationResults } = useSimulations();
+  const { simulations, saveSimulationResults, removeProductFromSimulation } = useSimulations();
 
   const { simulationId } = route.params ?? {};
   const simulation = simulations.find((s) => s.id === simulationId);
 
+  // Ahora solo navegamos a la pantalla de loading; esa pantalla hace el delay y la ejecución
   const executeSimulation = (sim) => {
-    if (!sim || !sim.products) return;
-    const results = runSimulation(sim.products);
-    saveSimulationResults(sim.id, results);
-    navigation.navigate("SimulationResults", { simulationId: sim.id });
+    if (!sim || !sim.id) return;
+    navigation.navigate("SimulationLoading", { simulationId: sim.id });
   };
 
   if (!simulation) {
@@ -44,34 +44,29 @@ export function ListadoProductos() {
             <Text style={{ color: "gray" }}>No hay productos aún</Text>
           ) : (
             simulation.products.map((p) => (
-              <ProductCard key={p.id ?? p.title} title={p.title} onPress={() => {}} />
+              <ProductCard
+                key={p.id ?? p.title}
+                title={p.title}
+                onPress={() => {}}
+                onDelete={() => removeProductFromSimulation(simulation.id, p.id)}
+              />
             ))
           )}
         </View>
       </View>
 
       <View style={styles.container__btn}>
-        <Pressable
-          style={styles.btn__agregar}
-          onPress={() =>
-            navigation.navigate("Form", { simulationId: simulation.id })
-          }
-        >
-          <Text style={styles.txt__agregar}>+</Text>
-        </Pressable>
+        <FancyButton onPress={() => navigation.navigate("Form", { simulationId: simulation.id })} style={styles.fab}>
+          +
+        </FancyButton>
 
-        <Text>Agregar Productos</Text>
+        <Text style={styles.label}>Agregar Productos</Text>
 
         {/* Botón para ejecutar la simulación */}
         <View style={{ marginTop: 16, width: "100%", alignItems: "center" }}>
-          <Pressable
-            style={[styles.btn__agregar, { width: 160, height: 44, borderRadius: 8 }]}
-            onPress={() => executeSimulation(simulation)}
-          >
-            <Text style={[styles.txt__agregar, { fontSize: 18 }]}>
-              Ejecutar simulación
-            </Text>
-          </Pressable>
+          <FancyButton onPress={() => executeSimulation(simulation)} style={styles.execBtn}>
+            Ejecutar simulación
+          </FancyButton>
         </View>
       </View>
     </View>
@@ -98,18 +93,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 15,
   },
-  btn__agregar: {
-    backgroundColor: "rgba(38,112,221,1)",
-    borderRadius: 80,
-    width: 60,
-    height: 60,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
+  fab: {
+    width: 64,
+    height: 64,
+    borderRadius: 34,
   },
-  txt__agregar: {
-    fontSize: 20,
-    color: "white",
-    textAlign: "center",
+  execBtn: {
+    width: 180,
+    height: 48,
+    borderRadius: 12,
+  },
+  label: {
+    marginTop: 8,
+    color: "#374151",
   },
 });

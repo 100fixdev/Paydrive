@@ -1,4 +1,4 @@
-// context/SimulationsContext.js
+// context/SimulationsContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -27,7 +27,6 @@ export function SimulationsProvider({ children }) {
     }
   };
 
-  // ahora devuelve el id de la nueva simulación
   const addSimulation = (name = `Simulación ${simulations.length + 1}`) => {
     const newSim = { id: Date.now(), name, products: [], results: null };
     persist([...simulations, newSim]);
@@ -35,8 +34,10 @@ export function SimulationsProvider({ children }) {
   };
 
   const addProductToSimulation = (simulationId, product) => {
+    // Aseguramos que cada producto tenga un id único para poder eliminarlo después.
+    const productWithId = { id: product.id ?? Date.now() + Math.floor(Math.random() * 1000), ...product };
     const updated = simulations.map((s) =>
-      s.id === simulationId ? { ...s, products: [...s.products, product] } : s
+      s.id === simulationId ? { ...s, products: [...s.products, productWithId] } : s
     );
     persist(updated);
   };
@@ -48,6 +49,20 @@ export function SimulationsProvider({ children }) {
     persist(updated);
   };
 
+  const removeSimulation = (simulationId) => {
+    const updated = simulations.filter((s) => s.id !== simulationId);
+    persist(updated);
+  };
+
+  const removeProductFromSimulation = (simulationId, productId) => {
+    const updated = simulations.map((s) =>
+      s.id === simulationId
+        ? { ...s, products: s.products.filter((p) => p.id !== productId) }
+        : s
+    );
+    persist(updated);
+  };
+
   return (
     <SimulationsContext.Provider
       value={{
@@ -55,6 +70,8 @@ export function SimulationsProvider({ children }) {
         addSimulation,
         addProductToSimulation,
         saveSimulationResults,
+        removeSimulation,
+        removeProductFromSimulation,
       }}
     >
       {children}

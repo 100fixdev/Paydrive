@@ -1,7 +1,8 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useSimulations } from "../context/SimulationsContext";
+import FancyButton from "../components/FancyButton";
 
 export function Form() {
   const { addProductToSimulation } = useSimulations();
@@ -78,7 +79,9 @@ export function Form() {
       </View>
 
       <View style={styles.buttonWrap}>
-        <Button title="Guardar Producto" onPress={handleSubmit} />
+        <FancyButton onPress={handleSubmit} style={styles.submitBtn}>
+          Guardar Producto
+        </FancyButton>
       </View>
     </View>
   );
@@ -114,6 +117,16 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   buttonWrap: {
-    marginTop: 8,
+    marginTop: 12,
+    alignItems: "center",
+  },
+  submitBtn: {
+    width: 220,
+    height: 52,
+    borderRadius: 14,
   },
 });
+
+/* Estilo antiguo del botón nativo (comentado)
+  <Button title="Guardar Producto" onPress={handleSubmit} />
+*/

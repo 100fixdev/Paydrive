@@ -9,6 +9,7 @@ import { Form } from "./screens/Form.jsx";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { SimulationsProvider } from "./context/SimulationsContext.jsx";
 import SimulationResultsScreen from "./screens/SimulationResultsScreen.jsx";
+import SimulationLoading from "./screens/SimulationLoading.jsx"; // <-- nueva pantalla
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +30,10 @@ export default function App() {
             {/* Pantalla donde se crean simulaciones o productos */}
             <Stack.Screen name="Form" component={Form} />
 
-            {/* Pantalla de listado de productos */}
+            {/* Pantalla de loading (espera + ejecución) */}
+            <Stack.Screen name="SimulationLoading" component={SimulationLoading} />
+
+            {/* Pantalla donde se muestran el listado de productos */}
             <Stack.Screen
               name="ListadoProductos"
               component={ListadoProductos}
@@ -40,8 +44,6 @@ export default function App() {
               name="SimulationResults"
               component={SimulationResultsScreen}
             />
-
-
           </Stack.Navigator>
         </NavigationContainer>
 
